@@ -1,13 +1,16 @@
 package com.example.upadhyb1.popularmovies;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -135,15 +139,30 @@ public class MovieFragment extends Fragment {
         private final String LOG_TAG = FetchMovieTask.class.getSimpleName();
         MovieJsonParser movieJson = new MovieJsonParser();
         ProgressDialog progressDialog;
-        String pageNumber = new String();
+        String pageNumber;
+        Toast error;
 
         @Override
         protected  void onPreExecute(){
-            progressDialog = ProgressDialog.show(getActivity(), "Please wait...", "Fetching the movies");
+            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
+                progressDialog = ProgressDialog.show(getActivity(), "Please wait...", "Fetching the movies");
+            } else {
+                error = Toast.makeText(getActivity(),
+                        "Internet permission not granted",
+                        Toast.LENGTH_LONG);
+                error.show();
+            }
         }
 
         @Override
         protected void onPostExecute(String movieJsonStr) {
+            if(movieJsonStr == null){
+                error = Toast.makeText(getActivity(),
+                        "Can't connect to the server",
+                        Toast.LENGTH_LONG);
+                error.show();
+                return;
+            }
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
@@ -161,6 +180,7 @@ public class MovieFragment extends Fragment {
 
                     moviesGridView.setAdapter(movieAdapter);
                 } else {
+                    Log.d(LOG_TAG,"page "+pageNumber);
                     movieList.addAll(movieJson.getMovieList(movieJsonStr));
                     movieAdapter.notifyDataSetChanged();
                 }
@@ -174,7 +194,7 @@ public class MovieFragment extends Fragment {
             BufferedReader reader = null;
             String format = "json";
             pageNumber = params[3];
-            String movieJsonStr = null;
+            String movieJsonStr;
 
             try {
                 // Construct the URL for the OpenWeatherMap query
