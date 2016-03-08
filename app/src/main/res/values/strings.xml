@@ -11,7 +11,7 @@
     <string name="pref_vote_count" translatable="false">vote_count</string>
     <string name="pref_vote_count_default" translatable="false">1000</string>
     <string name="pref_sort_key" translatable="false">sort</string>
-    <string name="pref_sort_default" translatable="false">0</string>
+    <string name="pref_sort_default" translatable="false">desc</string>
     <string-array name="pref_sort_keys">
         <item>desc</item>
         <item>aesc</item>

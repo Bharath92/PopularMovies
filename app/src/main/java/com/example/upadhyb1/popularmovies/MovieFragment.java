@@ -63,13 +63,16 @@ public class MovieFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.action_refresh){
+            scrollListener.setPageNumber(1);
             updateMovies(sortby,pageNumber);
             return true;
         } else if(id == R.id.sort_popularity){
+            scrollListener.setPageNumber(1);
             sortby = "popularity";
             updateMovies("popularity",pageNumber);
             return true;
         } else if(id == R.id.sort_rating){
+            scrollListener.setPageNumber(1);
             sortby = "vote_average";
             updateMovies("vote_average",pageNumber);
             return true;

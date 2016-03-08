@@ -12,7 +12,7 @@
         android:title="Vote Count"
         android:key="@string/pref_vote_count"
         android:defaultValue="@string/pref_vote_count_default"
-        android:inputType="text"
+        android:inputType="number"
         android:singleLine="true"/>
 
 </PreferenceScreen>

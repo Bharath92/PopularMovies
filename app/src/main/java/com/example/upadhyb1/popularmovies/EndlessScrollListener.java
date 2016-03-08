@@ -53,6 +53,10 @@ public class EndlessScrollListener implements OnScrollListener {
         pageNumber=pageNumber+1;
     }
 
+    public void setPageNumber(int num){
+        pageNumber = num;
+    }
+
     public interface RefreshList {
 
         public void onRefresh(int pageNumber);

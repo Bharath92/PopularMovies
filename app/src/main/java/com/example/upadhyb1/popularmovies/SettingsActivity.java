@@ -1,5 +1,6 @@
 package com.example.upadhyb1.popularmovies;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -10,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -27,11 +29,10 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("SettingsActivity", "coming here");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
-        //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
-        //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_temp_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_vote_count)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_key)));
         // Add 'general' preferences, defined in the XML file
         // TODO: Add preferences from XML
 
@@ -40,7 +41,32 @@ public class SettingsActivity extends PreferenceActivity
         // TODO: Add preferences
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+
+        /*Preference preference = findPreference(getString(R.string.pref_vote_count));
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String stringValue = newValue.toString();
+                Log.d("SettingsActivity","Number changed");
+                try{
+                    int num = Integer.parseInt(stringValue);
+                    Log.d("SettingsActivity",num+"");
+                    if(num < 1 || num >10000){
+                        Toast.makeText(getApplicationContext(), "Please enter only numbers between 1 - 1000!", Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Please enter only numbers between 1 - 1000!", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_vote_count)));
+                preference.setSummary(stringValue);
+                return true;
+            }
+        });*/
+
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     /**
@@ -48,8 +74,10 @@ public class SettingsActivity extends PreferenceActivity
      * Also fires the listener once, to initialize the summary (so it shows up before the value
      * is changed.)
      */
+
     private void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
+
         preference.setOnPreferenceChangeListener(this);
 
         // Trigger the listener immediately with the preference's
@@ -63,9 +91,9 @@ public class SettingsActivity extends PreferenceActivity
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
         String stringValue = value.toString();
-
+        Log.d("SettingsActivity","Coming here");
         if (preference instanceof ListPreference) {
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_vote_count)));
+            //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_key)));
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list (since they have separate labels/values).
             ListPreference listPreference = (ListPreference) preference;
@@ -75,7 +103,19 @@ public class SettingsActivity extends PreferenceActivity
             }
         } else {
             // For other preferences, set the summary to the value's simple string representation.
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_vote_count)));
+            Log.d("SettingsActivity","Number changed");
+            try{
+                int num = Integer.parseInt(stringValue);
+                Log.d("SettingsActivity",num+"");
+                if(num < 1 || num >10000){
+                    Toast.makeText(getApplicationContext(), "Please enter only numbers between 1 - 1000!", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                Toast.makeText(getApplicationContext(), "Please enter only numbers between 1 - 1000!", Toast.LENGTH_LONG).show();
+                return false;
+            }
+            //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_vote_count)));
             preference.setSummary(stringValue);
         }
         return true;
