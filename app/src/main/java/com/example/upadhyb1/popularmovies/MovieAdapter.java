@@ -12,6 +12,8 @@ import android.widget.SimpleAdapter;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +45,18 @@ public class MovieAdapter extends SimpleAdapter {
         ImageView posterImageView = (ImageView) convertView.findViewById(R.id.poster);
 
         String moviePoster = data.get("poster_path");
-
-        Uri imageUri = Uri.parse(imageUrl).buildUpon()
-                .appendPath(imageSize)
-                .appendPath(moviePoster.substring(1))
-                .build();
+        Uri imageUri;
+        if(data.get(Constants.FAVORITE).equals("1")){
+            File file = new File(convertView.getContext().getFilesDir(), moviePoster.substring(1));
+            Log.d("MovieAdapter",file.getPath());
+            imageUri = Uri.fromFile(file);
+            Log.d("MovieAdapter",imageUri.toString());
+        } else {
+            imageUri = Uri.parse(imageUrl).buildUpon()
+                    .appendPath(imageSize)
+                    .appendPath(moviePoster.substring(1))
+                    .build();
+        }
 
 
         posterImageView.setScaleType(ImageView.ScaleType.FIT_XY);

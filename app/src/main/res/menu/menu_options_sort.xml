@@ -11,4 +11,7 @@
     <item android:id="@+id/sort_rating"
         android:title="Sort by Rating"
         app:showAsAction="never"/>
+    <item android:id="@+id/favorites"
+        android:title="Favorites"
+        app:showAsAction="never"/>
 </menu>

@@ -2,11 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="32dp"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="8dp"
     tools:context=".MovieFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -17,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="1dp"
-        android:layout_marginTop="20dp"
-        android:numColumns="2"
+        android:layout_marginTop="60dp"
+        android:numColumns="auto_fit"
         android:verticalSpacing="1dp">
 
     </GridView>

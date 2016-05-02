@@ -36,6 +36,11 @@
                 android:value="com.example.upadhyb1.popularmovies.MainActivity" />
         </activity>
 
+        <provider
+            android:name=".data.MovieProvider"
+            android:authorities="in.upadhyb1.popularmovies"
+             />
+
         <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />

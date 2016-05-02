@@ -1,7 +1,12 @@
 package com.example.upadhyb1.popularmovies;
 
+import android.app.Activity;
+import android.content.ContentValues;
+import android.support.v4.app.FragmentActivity;
 import android.text.format.Time;
 import android.util.Log;
+
+import com.example.upadhyb1.popularmovies.data.MovieContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +24,10 @@ import java.util.HashMap;
  */
 public class MovieJsonParser {
     private final String LOG_TAG = MovieJsonParser.class.getSimpleName();
+    FragmentActivity activity;
+    public MovieJsonParser(FragmentActivity activity){
+        this.activity = activity;
+    }
 
     private String formatDateString(String dateStr){
         try {
@@ -44,6 +53,7 @@ public class MovieJsonParser {
         JSONArray movieArray = movieJson.getJSONArray(Constants.MOVIE_LIST);
         for(int i = 0; i < movieArray.length(); i++) {
             HashMap<String,String> movieDetails = new HashMap<String,String>();
+            movieDetails.put(Constants.MOVIE_ID, movieArray.getJSONObject(i).get(Constants.MOVIE_ID).toString());
             movieDetails.put(Constants.MOVIE_POSTER, movieArray.getJSONObject(i).get(Constants.MOVIE_POSTER).toString());
             movieDetails.put(Constants.MOVIE_OVERVIEW, movieArray.getJSONObject(i).get(Constants.MOVIE_OVERVIEW).toString());
             movieDetails.put(Constants.MOVIE_ORIGINAL_TITLE, movieArray.getJSONObject(i).get(Constants.MOVIE_ORIGINAL_TITLE).toString());
@@ -54,6 +64,7 @@ public class MovieJsonParser {
             movieDetails.put(Constants.MOVIE_POPULARITY, movieArray.getJSONObject(i).get(Constants.MOVIE_POPULARITY).toString());
             movieDetails.put(Constants.MOVIE_BACKDROP_PATH, movieArray.getJSONObject(i).get(Constants.MOVIE_BACKDROP_PATH).toString());
             movieDetails.put(Constants.MOVIE_RELEASE_DATE, formatDateString(movieArray.getJSONObject(i).get(Constants.MOVIE_RELEASE_DATE).toString()));
+            movieDetails.put(Constants.FAVORITE, ""+updateMovieDetails(movieArray.getJSONObject(i)));
             m_kvpair.add(movieDetails);
         }
 
@@ -67,6 +78,25 @@ public class MovieJsonParser {
             return false;
         }
         return true;
+    }
+
+    private int updateMovieDetails(JSONObject json) throws JSONException{
+        String movieId = json.get(Constants.MOVIE_ID).toString();
+        ContentValues fav = new ContentValues();
+        fav.put(MovieContract.MovieEntry.COLUMN_MOVIE_TITLE, json.get(Constants.MOVIE_TITLE).toString());
+        fav.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE, formatDateString(json.get(Constants.MOVIE_RELEASE_DATE).toString()));
+        fav.put(MovieContract.MovieEntry.COLUMN_RATING, json.get(Constants.MOVIE_VOTE_AVERAGE).toString());
+        fav.put(MovieContract.MovieEntry.COLUMN_DESCRIPTION, json.get(Constants.MOVIE_OVERVIEW).toString());
+        fav.put(MovieContract.MovieEntry.COLUMN_VOTE_COUNT, json.get(Constants.MOVIE_VOTE_COUNT).toString());
+        fav.put(MovieContract.MovieEntry.COLUMN_POPULARITY, json.get(Constants.MOVIE_POPULARITY).toString());
+        int updated = activity.getContentResolver().update(
+                MovieContract.MovieEntry.CONTENT_URI,
+                fav,
+                MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ? ",
+                new String[]{movieId}
+        );
+        Log.d(LOG_TAG,"updated rows : "+updated);
+        return updated;
     }
 }
 

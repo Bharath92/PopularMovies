@@ -48,6 +48,10 @@ public class EndlessScrollListener implements OnScrollListener {
         this.hasMorePages = false;
     }
 
+    public void hasMorePages(){
+        this.hasMorePages = true;
+    }
+
     public void notifyMorePages(){
         isRefreshing=false;
         pageNumber=pageNumber+1;
