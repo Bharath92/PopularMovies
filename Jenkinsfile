@@ -39,6 +39,7 @@ pipeline {
                     ).trim()
                 }
                 echo "$branchHash"
+                
                 checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${branchHash}:refs/remotes/origin/${BRANCH_NAME}", url: 'https://github.com/bharath92/popularmovies.git']])
                 // checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${BRANCH_NAME}", url: 'https://github.com/bharath92/popularmovies.git']])
                 sh 'echo foo'
