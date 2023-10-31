@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo foo'
+                sh 'printenv'
             }
         }
         stage('Test') {
