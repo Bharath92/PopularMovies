@@ -19,6 +19,9 @@ pipeline {
     stages {
         stage('Build2') {
             steps {
+                params.each {param ->
+                  println "${param.key} -> ${param.value} "
+                }
                 sh 'printenv'
                 sh 'echo ${params.GIT_REVISION}'
                 sh 'ls -la $WORKSPACE_TMP'
