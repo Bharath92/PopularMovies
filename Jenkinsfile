@@ -7,7 +7,3 @@ node {
         echo 'Hello World'
     }
 }
-
-
-
-
