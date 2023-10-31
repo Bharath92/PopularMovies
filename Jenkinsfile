@@ -34,7 +34,7 @@ pipeline {
                 sh 'git ls-remote https://github.com/bharath92/popularmovies.git refs/heads/${BRANCH_NAME} | cut -f1'
                 script {
                     branchHash = sh(
-                        script: "echo -n \$( git ls-remote ${repoUrl} refs/heads/${env.BRANCH_NAME} | cut -f1 )",
+                        script: "echo -n \$( git ls-remote https://github.com/bharath92/popularmovies.git refs/heads/${env.BRANCH_NAME} | cut -f1 )",
                         returnStdout: true
                     ).trim()
                 }
