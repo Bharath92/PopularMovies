@@ -19,7 +19,9 @@ pipeline {
     stages {
         stage('Build2') {
             steps {
+                echo "boo"
                 script {
+                    println "kkk"
                     params.each {param ->
                       println " '${param.key.trim()}' -> '${param.value.trim()}' "
                     }
