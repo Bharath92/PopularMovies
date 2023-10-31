@@ -14,6 +14,7 @@
 // }
 
 
+
 def commitHashForBuild(build) {
     def scmAction = build?.actions.find { action -> action instanceof jenkins.scm.api.SCMRevisionAction }
     if (scmAction?.revision instanceof org.jenkinsci.plugins.github_branch_source.PullRequestSCMRevision) {
