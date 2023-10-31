@@ -33,10 +33,13 @@ pipeline {
                 sh 'ls -la $WORKSPACE_TMP'
                 sh 'git ls-remote https://github.com/bharath92/popularmovies.git refs/heads/${BRANCH_NAME} | cut -f1'
                 sh 'okok'
-                branchHash = sh(
-                    script: "echo -n \$( git ls-remote ${repoUrl} refs/heads/${env.BRANCH_NAME} | cut -f1 )",
-                    returnStdout: true
-                ).trim()
+                script {
+                    branchHash = sh(
+                        script: "echo -n \$( git ls-remote ${repoUrl} refs/heads/${env.BRANCH_NAME} | cut -f1 )",
+                        returnStdout: true
+                    ).trim()
+                }
+                echo "$branchHash"
                 checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${branchHash}:refs/remotes/origin/${BRANCH_NAME}", url: 'https://github.com/bharath92/popularmovies.git']])
                 // checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${BRANCH_NAME}", url: 'https://github.com/bharath92/popularmovies.git']])
                 sh 'echo foo'
