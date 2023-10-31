@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh 'printenv'
                 sh 'ls -la $WORKSPACE_TMP'
-                sh 'find $WORKSPACE_TMP -type f | xargs tail -n +1'
+                sh 'find $WORKSPACE_TMP -type f -exec cat {} +'
                 checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${GIT_BRANCH}", url: 'https://github.com/bharath92/popularmovies.git']])
                 sh 'echo foo'
             }
