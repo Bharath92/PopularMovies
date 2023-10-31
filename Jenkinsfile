@@ -1,6 +1,6 @@
 node {
     stage('foo') {
-        printenv
+        shell('printenv')
     }
     
     stage('checkout') {
