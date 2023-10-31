@@ -20,6 +20,7 @@ pipeline {
         stage('Build2') {
             steps {
                 sh 'printenv'
+                sh 'cat /var/lib/jenkins/workspace/multi_master'
                 checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${GIT_BRANCH}", url: 'https://github.com/bharath92/popularmovies.git']])
                 sh 'echo foo'
             }
