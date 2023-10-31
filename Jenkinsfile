@@ -15,18 +15,20 @@
 
 pipeline {
     agent any
-    options { skipDefaultCheckout() } 
+    // options { skipDefaultCheckout() } 
     stages {
         stage('Build') {
             steps {
                 sh 'printenv'
-            }
-        }
-        stage('checkout') {
-            steps {
                 checkout scmGit(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${GIT_BRANCH}", url: 'https://github.com/bharath92/popularmovies.git']])
+                sh 'echo foo'
             }
         }
+        // stage('checkout') {
+        //     steps {
+                
+        //     }
+        // }
         stage('Test') {
             steps {
                 sh 'echo bar'
