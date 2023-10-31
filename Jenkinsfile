@@ -21,7 +21,6 @@ pipeline {
             steps {
                 sh 'printenv'
                 sh 'ls -la $WORKSPACE_TMP'
-                sh 'sleep 60'
                 checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${GIT_BRANCH}", url: 'https://github.com/bharath92/popularmovies.git']])
                 sh 'echo foo'
             }
