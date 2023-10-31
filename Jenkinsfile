@@ -19,6 +19,11 @@ pipeline {
     stages {
         stage('Build2') {
             steps {
+                script {
+                    params.each {param ->
+                      println " '${param.key.trim()}' -> '${param.value.trim()}' "
+                    }
+                }
                 sh 'printenv'
                 echo "foo ${params}"
                 echo "foo ${params.INPUT_REVISION}"
