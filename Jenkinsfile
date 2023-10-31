@@ -31,7 +31,7 @@ pipeline {
                 echo "foo ${params.INPUT_REVISION}"
                 echo "Hello ${params.GIT_REVISION}"
                 sh 'ls -la $WORKSPACE_TMP'
-                sh 'git ls-remote https://github.com/bharath92/popularmovies.git refs/heads/${BRANCH_NAME} | cut -f1"
+                sh 'git ls-remote https://github.com/bharath92/popularmovies.git refs/heads/${BRANCH_NAME} | cut -f1'
                 sh 'okok'
                 checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${BRANCH_NAME}", url: 'https://github.com/bharath92/popularmovies.git']])
                 // checkout scm(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[refspec: "+${GIT_COMMIT}:refs/remotes/origin/${BRANCH_NAME}", url: 'https://github.com/bharath92/popularmovies.git']])
