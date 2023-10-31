@@ -1,5 +1,6 @@
 node {
     stage('foo') {
+        shell('echo lol')
         shell('printenv')
     }
     
