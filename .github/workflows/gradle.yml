@@ -23,4 +23,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: hi
       shell: bash
-      run: echo hi
+      run: |
+        meshd --version
+        echo hi
