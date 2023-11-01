@@ -26,6 +26,8 @@ def commitHashForBuild(build) {
     }
 }
 
+
+
 pipeline {
     agent any
     options { skipDefaultCheckout() } 
