@@ -21,7 +21,7 @@ jobs:
 
     steps:
     # - uses: actions/checkout@v3
-    - name: hi
+    - name: checkout
       shell: bash
       run: |
         meshd --version
@@ -30,4 +30,8 @@ jobs:
         /usr/bin/git remote add origin https://github.com/Bharath92/PopularMovies.git || true
         /usr/bin/git config --local gc.auto 0
         meshd git fetch +$GITHUB_SHA:refs/remotes/origin/master --no-tags --prune --progress --no-recurse-submodules --depth=1
-        echo hi
+        printenv
+    - name: test
+      shell: bash
+      run: ls -la
+        
