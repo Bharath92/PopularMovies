@@ -31,6 +31,7 @@ jobs:
         meshd --version
         /usr/bin/git config --global --add safe.directory /home/bharathu/actions-runner/_work/PopularMovies/PopularMovies
         /usr/bin/git init /home/bharathu/actions-runner/_work/PopularMovies/PopularMovies
+        git remote remove origin
         /usr/bin/git remote add origin https://github.com/Bharath92/PopularMovies.git || true
         git remote -v
         /usr/bin/git config --local gc.auto 0
