@@ -33,5 +33,7 @@ jobs:
     #     printenv
     - name: test
       shell: bash
-      run: ls -la
+      run: |
+        printenv
+        ls -la
         
